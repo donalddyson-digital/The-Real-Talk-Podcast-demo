@@ -304,6 +304,7 @@
     </a>
 
   </div>
+<p id="no-results" style="display:none;text-align:center;color:rgba(255,255,255,0.3);padding:3rem 0;font-size:0.9rem;">No episodes found in this category.</p>
 </div>
 
 <footer>
@@ -340,31 +341,62 @@
   }
 </script>
 
+
+
 <script>
 (function(){
-  // Filter episodes by category
-  function filterEps(cat) {
-    document.querySelectorAll('.ep-row').forEach(function(row) {
-      var rowCat = row.getAttribute('data-category') || '';
-      row.style.display = (cat === 'All' || rowCat === cat) ? '' : 'none';
+
+  // ── HAMBURGER ──────────────────────────────────────────
+  var btn = document.getElementById('hamburger');
+  var menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    });
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
     });
   }
 
-  // Button click handlers
+  // ── EPISODE FILTER ─────────────────────────────────────
+  function applyFilter(cat) {
+    document.querySelectorAll('a.ep-row').forEach(function(row) {
+      var rowCat = row.getAttribute('data-category') || '';
+      row.style.display = (cat === 'All' || rowCat === cat) ? 'grid' : 'none';
+    });
+  }
+
+  // Default: show all
+  applyFilter('All');
+
+  // Button clicks
   document.querySelectorAll('.filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.filter-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
       btn.classList.add('active');
-      filterEps(btn.getAttribute('data-filter') || 'All');
+      applyFilter(btn.getAttribute('data-filter') || 'All');
     });
   });
 
-  // Support ?f= URL param (from mobile menu links)
-  var urlCat = new URLSearchParams(window.location.search).get('f');
-  if (urlCat) {
-    var matchBtn = document.querySelector('[data-filter="' + urlCat + '"]');
-    if (matchBtn) matchBtn.click();
+  // URL param: ?f=Interview etc (from mobile menu)
+  var param = new URLSearchParams(window.location.search).get('f');
+  if (param) {
+    var matchBtn = document.querySelector('.filter-btn[data-filter="' + param + '"]');
+    if (matchBtn) {
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      matchBtn.classList.add('active');
+      applyFilter(param);
+    }
   }
+
 })();
 </script>
 </body>

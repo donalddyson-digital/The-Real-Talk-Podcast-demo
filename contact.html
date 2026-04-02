@@ -196,7 +196,7 @@
       </div>
       <div class="contact-opt">
         <span class="opt-icon">📧</span>
-        <div><div class="opt-title">General</div><div class="opt-desc"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7bfb2bbbbb897a5b2b6bba3b6bbbca7b8b3b4b6a4a3f9b4b8ba">[email&#160;protected]</a> · We respond within 48 hours.</div></div>
+        <div><div class="opt-title">General</div><div class="opt-desc">hello@realtalkpodcast.com · We respond within 48 hours.</div></div>
       </div>
     </div>
   </div>
@@ -232,6 +232,24 @@
 
   <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);text-align:center;padding-top:0.5rem;">Demo site built by <a href="https://dysondigital.com" target="_blank" style="color:rgba(167,139,250,0.5);text-decoration:none;">Dyson Digital</a> · Royal Oak, MI</div>
 </footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-document.querySe
+<script>
+(function(){
+  var btn=document.getElementById('hamburger');
+  var menu=document.getElementById('mobileMenu');
+  if(!btn||!menu) return;
+  btn.addEventListener('click',function(){
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+      document.body.style.overflow='';
+    });
+  });
+})();
+</script>
+</body>
+</html>
