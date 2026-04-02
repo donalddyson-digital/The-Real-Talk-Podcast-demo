@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Real Talk Podcast — Home</title>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -246,6 +248,54 @@
     .newsletter-form { flex-direction: column; }
     .footer-top { flex-direction: column; }
   }
+
+  /* HAMBURGER MOBILE NAV */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: white; border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
+    z-index: 99; padding: 2rem; flex-direction: column; gap: 0;
+    overflow-y: auto;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a, .mobile-menu-section-title {
+    display: block; padding: 1rem 0; font-size: 1.05rem; font-weight: 500;
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: white; }
+  .mobile-menu-section-title {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--purple-light);
+    padding-top: 1.5rem; border-bottom: none;
+  }
+  .mobile-menu-cta {
+    margin-top: 1.5rem; background: var(--purple); color: white !important;
+    text-align: center; border-radius: 8px; padding: 0.9rem !important;
+    font-weight: 700 !important; font-size: 0.9rem !important;
+    border-bottom: none !important;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+
 </style>
 </head>
 <body>
@@ -284,12 +334,32 @@
     </li>
   </ul>
   <a href="contact.html" class="nav-cta">🎙️ Be a Guest</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-section-title">Navigate</div>
+  <a href="index.html">Home</a>
+  <div class="mobile-menu-section-title">Episodes</div>
+  <a href="episodes.html">All Episodes</a>
+  <a href="episodes.html?filter=Interview">Interviews</a>
+  <a href="episodes.html?filter=Story">Stories</a>
+  <a href="episodes.html?filter=Live Show">Live Shows</a>
+  <a href="episodes.html?filter=Solo">Solo Episodes</a>
+  <div class="mobile-menu-section-title">About</div>
+  <a href="about.html">The Show</a>
+  <a href="about.html#host">Meet the Host</a>
+  <a href="about.html#guests">Past Guests</a>
+  <div class="mobile-menu-section-title">Connect</div>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="mobile-menu-cta">🎙️ Be a Guest</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-live"><span class="live-dot"></span>New episode every Tuesday</div>
-  <h1 class="hero-title">Real Conversations.<br><em>Real Stories.</em></h1>
+  <h1 class="hero-title">The Real Talk.<br><em>Real Stories.</em></h1>
   <p class="hero-sub">The Real Talk Podcast goes deep on culture, hustle, and everything in between. No filter, no fluff — just honest conversations with people who have something to say.</p>
   <div class="hero-btns">
     <a href="episodes.html" class="btn-primary">▶ Latest Episode</a>
@@ -425,7 +495,30 @@
       <a href="#" class="social-btn">▶</a>
     </div>
   </div>
+
+  <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);text-align:center;padding-top:0.5rem;">Demo site built by <a href="https://dysondigital.com" target="_blank" style="color:rgba(167,139,250,0.5);text-decoration:none;">Dyson Digital</a> · Royal Oak, MI</div>
 </footer>
+
+
+<script>
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    });
+    // Close on link click
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
