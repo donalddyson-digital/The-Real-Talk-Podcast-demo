@@ -146,12 +146,12 @@
     <li class="nav-item">
       <span class="nav-link active">Episodes <span class="nav-arrow">▾</span></span>
       <div class="dropdown">
-        <a href="episodes.html">All Episodes</a>
-        <a href="#interviews">Interviews</a>
-        <a href="#stories">Stories</a>
-        <a href="#live">Live Shows</a>
+        <a href="javascript:void(0)" onclick="setFilter('All')">All Episodes</a>
+        <a href="javascript:void(0)" onclick="setFilter('Interview')">Interviews</a>
+        <a href="javascript:void(0)" onclick="setFilter('Story')">Stories</a>
+        <a href="javascript:void(0)" onclick="setFilter('Live Show')">Live Shows</a>
         <div class="dropdown-divider"></div>
-        <a href="#clips">Short Clips</a>
+        <a href="javascript:void(0)" onclick="setFilter('Short Clip')">Short Clips</a>
       </div>
     </li>
     <li class="nav-item">
@@ -322,28 +322,6 @@
 
 
 <script>
-  const btn = document.getElementById('hamburger');
-  const menu = document.getElementById('mobileMenu');
-  if (btn && menu) {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('open');
-      menu.classList.toggle('open');
-      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-    });
-    // Close on link click
-    menu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        btn.classList.remove('open');
-        menu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-</script>
-
-
-
-<script>
 (function(){
 
   // ── HAMBURGER ──────────────────────────────────────────
@@ -371,6 +349,17 @@
       row.style.display = (cat === 'All' || rowCat === cat) ? 'grid' : 'none';
     });
   }
+
+  // Global setter used by nav dropdown links
+  window.setFilter = function(cat) {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    var matchBtn = document.querySelector('.filter-btn[data-filter="' + cat + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    applyFilter(cat);
+    // Scroll to filter bar
+    var filterBar = document.querySelector('.filter-bar');
+    if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   // Default: show all
   applyFilter('All');
