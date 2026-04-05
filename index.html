@@ -50,15 +50,22 @@
 
   /* DROPDOWN */
   .dropdown {
-    position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     min-width: 200px; padding: 0.5rem;
-    opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(-6px);
-    transition: all 0.2s ease; pointer-events: none;
+    padding-top: 0.8rem;
+    margin-top: 0;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
     box-shadow: 0 20px 50px rgba(0,0,0,0.4);
   }
+  .nav-item::after {
+    content: ''; position: absolute;
+    top: 100%; left: 0; right: 0; height: 12px;
+  }
   .nav-item:hover .dropdown {
-    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+    opacity: 1; visibility: visible;
     pointer-events: all;
   }
   .dropdown a {
@@ -131,7 +138,7 @@
   .stat-label { font-size: 0.78rem; font-weight: 400; color: var(--gray); margin-top: 0.2rem; display: block; letter-spacing: 0.05em; }
 
   /* LATEST EPISODES */
-  .episodes-section { background: var(--dark); padding: 6rem 4rem; }
+  .episodes-section { background: var(--dark); padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; width: 100%; }
   .sec-eyebrow {
     font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 800;
     letter-spacing: 0.2em; text-transform: uppercase; color: var(--purple-light);
@@ -141,7 +148,7 @@
   .sec-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.15; margin-bottom: 0.5rem; }
   .sec-title em { font-style: italic; color: var(--purple-light); }
   .sec-sub { font-size: 0.9rem; font-weight: 300; color: var(--mid); line-height: 1.7; margin-bottom: 2.5rem; }
-  .ep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .ep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
   .ep-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     padding: 1.5rem; transition: all 0.25s; cursor: pointer; text-decoration: none; color: inherit; display: block;
@@ -163,7 +170,7 @@
     background: rgba(124,58,237,0.12); color: var(--purple-light); border-radius: 4px;
   }
   .ep-play { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--purple-light); margin-top: 0.8rem; }
-  .view-all-wrap { text-align: center; margin-top: 2.5rem; }
+  .view-all-wrap { text-align: center; margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
 
   /* PLATFORMS */
   .platforms { background: var(--black); padding: 4rem; border-top: 1px solid var(--border); }
@@ -374,7 +381,8 @@
 </section>
 
 <!-- LATEST EPISODES -->
-<section class="episodes-section" id="episodes">
+<section style="background:var(--dark);padding:6rem 4rem;" id="episodes">
+  <div style="max-width:1100px;margin:0 auto;">
   <div class="sec-eyebrow">Latest Episodes</div>
   <h2 class="sec-title">Fresh off the <em>mic.</em></h2>
   <p class="sec-sub">New episodes drop every Tuesday. Subscribe so you never miss a conversation.</p>
@@ -416,6 +424,7 @@
   <div class="view-all-wrap">
     <a href="episodes.html" class="btn-secondary">View All Episodes →</a>
   </div>
+</div>
 </section>
 
 <!-- PLATFORMS -->
